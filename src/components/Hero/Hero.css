@@ -27,7 +27,7 @@
 .hero-left p
 {
    color: #171717;
-   font-size: 80px;
+   font-size: 70px;
    font-weight: 700;
 }
 
@@ -73,7 +73,7 @@
 
 
 .hero-right img{
-    height: 500px;
+    height: 400px;
 }
 
 
@@ -110,7 +110,7 @@
 
    .hero-right img
    {
-      width: 400px;
+      width: 500px;
    }
 }
 
@@ -146,7 +146,7 @@
 
    .hero-right img
    {
-      width: 350px;
+      width: 430px;
    }
 }
 
@@ -182,8 +182,8 @@
 
    .hero-right img
    {
-      width: 300px;
-      height: 400px;
+      width: 350px;
+      height: 350px;
    }
 }
 

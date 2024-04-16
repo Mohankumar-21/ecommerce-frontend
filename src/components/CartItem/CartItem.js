@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import './CartItem.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
+import { message } from 'antd';
 
 const CartItem = () => {
 const {getTotalCartAmount ,all_product, cartItems, RemoveFromCart,  addToCart} = useContext(ShopContext);
@@ -14,14 +15,18 @@ const decreaseQuantity = (itemId) => {
     if (cartItems[itemId] > 0) {
         RemoveFromCart(itemId);
     }
+    else {
+        message.error("Quantity cannot be negative");
+    }
 };
 
   return (
     <div className='cartitems'>
-        <div className='cart-items-main'>
+        <div className='cart-items-main main-cart'>
             <p>Products</p>
             <p>Title</p>
             <p>Price</p>
+            <p>Stock</p>
             <p>Quantity</p>
             <p>Total</p>
             <p>Remove</p>
@@ -34,7 +39,10 @@ const decreaseQuantity = (itemId) => {
         return    <div className='cart-items-format cart-items-main'>
         <img src={e.image} alt='cart-icon' className='cart-product-icon' />
         <p>{e.name}</p>
-        <p>${e.new_price}</p>
+        <p className='order-align' >${e.new_price}</p>
+        <p className='order-align'>
+            {e.quantity>0 ? e.quantity-cartItems[e.id] : message.error("Stock is not available")}
+        </p>
          <div className='cart-item-quantity-button'>  
          <button className='cart-items-quantity' onClick={() => decreaseQuantity(e.id)}>-</button>
         <button className='cart-items-quantity'> {cartItems[e.id]}</button>

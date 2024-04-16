@@ -15,6 +15,11 @@
     gap: 10px;
 }
 
+.nav-logo img{
+
+    width: 100px;
+}
+
 .nav-logo p{
     color: #171717;
     font-size: 38px;
@@ -60,8 +65,14 @@
 
 .nav-menu li.active
 {
-    color: white !important;
+    color: white;
     background: red;
+   
+}
+.nav-menu li.active a
+{
+    color: white;
+   
    
 }
 
@@ -171,6 +182,11 @@
         font-size: 14px;
     }
 
+    .nav-logo img 
+    {
+        width: 70px;
+    }
+
     .nav-login-cart  button
     {
         width: 80px;
@@ -219,9 +235,19 @@
 
     }
 
+    .nav-menu img
+    {
+        width: 100px;
+    }
+
     .nav-menu-visible
     {
         display: flex;
+    }
+
+    .nav-logo img 
+    {
+        width:70px;
     }
 
  
@@ -240,12 +266,21 @@
     .nav-logo
     {
         transform: scale(0.8);
+        position: relative;
+        left: -10px;
+    }
+
+    .nav-logo p 
+    {
+        position: relative;
+        left: -15px;
     }
 
     .nav-menu
     {
         height: 70px;
         top: 70px;
+        
       
     }
 
@@ -254,6 +289,12 @@
         position: relative;
         right: 15px;
         font-size: 13px;
+    }
+
+    .navbar img 
+    {
+        position: relative;
+        left: -20px;
     }
 
     .nav-login-cart
@@ -274,5 +315,11 @@
     {
         position: relative;
         right: 12px;
+    }
+
+    .nav-login-cart 
+    {
+        position: relative;
+        left: -25px;
     }
 }

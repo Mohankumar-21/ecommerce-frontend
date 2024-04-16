@@ -22,6 +22,12 @@ const ShopContextProvider = (props) =>
 
   const [all_product, setAllproducts] = useState([]);
   const [cartItems, setCartItems] = useState(getDefaultCart());
+   // eslint-disable-next-line
+  const [searchQuery, setSearchQuery] = useState("");
+   // eslint-disable-next-line
+  const [allProducts, setAllProducts] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
 
   useEffect(()=>
   {
@@ -34,6 +40,7 @@ const ShopContextProvider = (props) =>
     })
     .then((data) => {
         setAllproducts(data);
+        setAllProducts(data);
     })
     .catch((error) => {
         console.error('Error fetching products:', error);
@@ -60,7 +67,30 @@ const ShopContextProvider = (props) =>
    setCartItems(data)
 })
 }
+
+
+
   },[])
+
+
+  useEffect(() => {
+    // Filter search results based on query
+    const filteredResults = allProducts.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+}, [allProducts, searchQuery]);
+
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+
+    
+    const filteredResults = allProducts.filter(product =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+};
 
   const addToCart = (itemId) => {
 
@@ -68,8 +98,22 @@ const ShopContextProvider = (props) =>
       message.error('You need to sign in to add items to the cart');
       return;
   }
+
+  const item = all_product.find(product => product.id === itemId);
+  if (!item || item.quantity === 0) {
+      message.error("Stock is not available");
+      return;
+  }
+
+  if (cartItems[itemId] >= item.quantity) {
+    message.error("Maximum stock reached");
+    return;
+}
+
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     message.success('Item is added to cart')
+
+  
 
     if (localStorage.getItem('auth-token')) {
         fetch('https://ecommerce-backend12.onrender.com/addtocart', {
@@ -97,6 +141,11 @@ const ShopContextProvider = (props) =>
         });
     }
 };
+
+
+
+
+
 
   const RemoveFromCart = (itemId) =>
   {
@@ -169,7 +218,15 @@ const ShopContextProvider = (props) =>
     return uniqueProducts.size;
   };
 
-  const contextValue = {all_product, cartItems, addToCart, RemoveFromCart, getTotalCartAmount, getTotalCartItem };
+  const contextValue = {all_product,
+      cartItems, 
+      addToCart,
+      RemoveFromCart, 
+      getTotalCartAmount, 
+      getTotalCartItem, 
+      searchResults,
+      handleSearch,
+      allProducts };
 
   return (
     <ShopContext.Provider value={contextValue} >

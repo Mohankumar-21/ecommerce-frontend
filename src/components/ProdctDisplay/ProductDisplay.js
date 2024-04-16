@@ -11,6 +11,9 @@ const ProductDisplay = (props) => {
     // Determine the quantity of this item in the cart
     const quantityInCart = cartItems[product.id] || 0;
 
+    // Calculate the remaining stock after considering items in the cart
+    const remainingStock = product.quantity - quantityInCart;
+
     return (
         <div className='productdisplay'>
             <div className='productdisplay-left'>
@@ -42,9 +45,13 @@ const ProductDisplay = (props) => {
                         ${product.new_price}
                     </div>
                 </div>
+             
                 <div className='product-display-right-description'>
                     A light weight, usually knitted, pullover shirt, cloth fitting,
                     a ground neckline and short sleeves, worn as an undershirt or outershirt.
+                </div>
+                <div  className='product-display-right-description'>
+                    <p>Stock Available :<span> {remainingStock}</span></p>
                 </div>
                 <div className='product-display-right-size'>
                     <h1>Size</h1>
@@ -56,7 +63,13 @@ const ProductDisplay = (props) => {
                         <div>XXL</div>
                     </div>
                 </div>
-                <button onClick={() => { addToCart(product.id) }}>
+                <button onClick={() => {
+                    if(remainingStock > 0) {
+                        addToCart(product.id);
+                    } else {
+                        alert("Stock is not available");
+                    }
+                }}>
                     ADD TO CART ({quantityInCart})
                 </button>
                 <p className='product-display-right-category'><span>Category :</span>Women, T-shirt, Crop Top</p>
